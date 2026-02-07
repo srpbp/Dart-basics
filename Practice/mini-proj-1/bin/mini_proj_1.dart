@@ -36,7 +36,15 @@ void main() {
         }
         break;
       case '3':
-        print('Show total spent');
+        if (expenses.isEmpty) {
+          print('No expenses recorded yet');
+        }
+
+        double total = 0.0;
+        for (Expense expense in expenses) {
+          total += expense.amount;
+        }
+        print('Total spent: $total');
         break;
       case '4':
         print('Exit');
@@ -56,6 +64,6 @@ class Expense {
 
   @override
   String toString() {
-    return '\nExpense(amount: $amount, category: $category)';
+    return 'Expense(amount: $amount, category: $category)';
   }
 }
