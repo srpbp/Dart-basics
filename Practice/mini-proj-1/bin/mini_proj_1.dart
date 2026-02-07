@@ -25,9 +25,12 @@ void main() {
         }
         stdout.write('Category of expense: ');
         String? category = stdin.readLineSync();
-        expenses.add(Expense(amount, category!));
-        print('Expense added!');
-        print(Expense(amount, category));
+        if (category == null || category.isEmpty) {
+          print('Category cannot be empty');
+          return;
+        }
+        expenses.add(Expense(amount, category));
+        print('Expense added! => ${expenses.last}');
         break;
       case '2':
         print('Expenses:');
@@ -51,7 +54,7 @@ void main() {
         return;
       default:
         print('Invalid option');
-        return;
+        continue;
     }
   }
 }
