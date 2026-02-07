@@ -1,32 +1,61 @@
 import 'dart:io';
 
 void main() {
-  print('\nExpense Tracker');
-  print('--------------');
-  print('1. Add expense');
-  print('2. View all expenses');
-  print('3. Show total spent');
-  print('4. Exit');
+  List<Expense> expenses = [];
 
-  print('\nChoose an option (1-4):');
-  String? choice = stdin.readLineSync();
+  while (true) {
+    print('\nExpense Tracker');
+    print('--------------');
+    print('1. Add expense');
+    print('2. View all expenses');
+    print('3. Show total spent');
+    print('4. Exit');
 
-  if (choice == '1') {
-    print('Add expense');
-  } else if (choice == '2') {
-    print('View all expenses');
-  } else if (choice == '3') {
-    print('Show total spent');
-  } else if (choice == '4') {
-    print('Exit');
-  } else {
-    print('Invaid');
+    stdout.write('\nChoose an option (1-4): ');
+    String? choice = stdin.readLineSync();
+
+    switch (choice) {
+      case '1':
+        stdout.write('\nAdd amount of expense: ');
+        String? amountInput = stdin.readLineSync();
+        double? amount = double.tryParse(amountInput ?? "");
+        if (amount == null || amount <= 0) {
+          print('$amount is not a valid amount');
+          return;
+        }
+        stdout.write('Category of expense: ');
+        String? category = stdin.readLineSync();
+        expenses.add(Expense(amount, category!));
+        print('Expense added!');
+        print(Expense(amount, category));
+        break;
+      case '2':
+        print('Expenses:');
+        for (Expense expense in expenses) {
+          print(expense);
+        }
+        break;
+      case '3':
+        print('Show total spent');
+        break;
+      case '4':
+        print('Exit');
+        return;
+      default:
+        print('Invalid option');
+        return;
+    }
   }
 }
 
 class Expense {
-  String name;
   double amount;
+  String category;
 
-  Expense(this.name, this.amount);
+  Expense(this.amount, this.category);
+
+  @override
+  String toString() {
+    return '\nExpense(amount: $amount, category: $category)';
+  }
 }
